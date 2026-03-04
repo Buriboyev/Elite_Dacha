@@ -1,0 +1,454 @@
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* COLORS */
+
+:root {
+  --primary: #00b894;
+  --bg: #ffffff;
+  --text: #111;
+  --glass: rgba(255, 255, 255, 0.15);
+  --border: rgba(255, 255, 255, 0.25);
+}
+
+.dark {
+  --bg: #111;
+  --text: #ffffff;
+  --glass: rgba(30, 30, 30, 0.6);
+  --border: rgba(255, 255, 255, 0.1);
+}
+/* PAGE TRANSITION */
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
+  line-height: 1.6;
+}
+.reservation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8%;
+}
+
+.btn_back {
+  text-decoration: none;
+  background: var(--primary);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+
+/* SECTION */
+
+.reservation {
+  min-height: calc(100vh - 120px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px 20px;
+}
+ /*============ date ============*/
+.dark .flatpickr-calendar{
+
+background: rgba(20,20,20,0.95);
+border-radius:18px;
+border:1px solid rgba(255,255,255,0.1);
+box-shadow:0 20px 60px rgba(0,0,0,0.6);
+backdrop-filter: blur(20px);
+
+color:white;
+
+}
+
+/* MONTH */
+
+.dark .flatpickr-current-month{
+
+color:white;
+font-weight:600;
+
+}
+
+/* WEEKDAYS */
+
+.dark .flatpickr-weekday{
+
+color:#aaa;
+
+}
+
+/* DAYS */
+
+.dark .flatpickr-day{
+
+color:white;
+border-radius:10px;
+
+}
+
+/* HOVER */
+
+.dark .flatpickr-day:hover{
+
+background:rgba(255,255,255,0.1);
+
+}
+
+/* SELECTED */
+
+.dark .flatpickr-day.selected{
+
+background:#17b890;
+
+}
+
+/* TODAY */
+
+.dark .flatpickr-day.today{
+
+border:1px solid #17b890;
+
+}
+.light .flatpickr-calendar{
+
+background:white;
+border-radius:18px;
+border:1px solid #eee;
+backdrop-filter: blur(20px);
+
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+
+}
+
+/* MONTH */
+
+.light .flatpickr-current-month{
+
+color:#222;
+font-weight:600;
+
+}
+
+/* WEEKDAYS */
+
+.light .flatpickr-weekday{
+
+color:#666;
+
+}
+
+/* DAYS */
+
+.light .flatpickr-day{
+
+color:#222;
+border-radius:10px;
+
+}
+
+/* HOVER */
+
+.light .flatpickr-day:hover{
+
+background:#f2f2f2;
+
+}
+
+/* SELECTED */
+
+.light .flatpickr-day.selected{
+
+background:#17b890;
+color:white;
+
+}
+
+/* TODAY */
+
+.light .flatpickr-day.today{
+
+border:1px solid #17b890;
+
+}.dark .flatpickr-prev-month,
+.dark .flatpickr-next-month{
+
+color:white;
+
+}
+
+.light .flatpickr-prev-month,
+.light .flatpickr-next-month{
+
+color:#333;
+
+}
+
+
+
+
+/* CARD */
+
+.booking-card {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  background: var(--bg);
+  transition: 0.3s;
+
+  backdrop-filter: blur(14px);
+
+  border-radius: 20px;
+  border: 1px solid var(--border);
+
+  padding: 40px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  transition: 0.3s;
+
+  cursor: pointer;
+}
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  transition: 0.3s;
+
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* FORM */
+
+#bookingForm {
+  width: 100%;
+  transition: 0.3s;
+
+  margin: auto;
+
+  background: var(--bg);
+
+  padding: 30px;
+
+  border-radius: 16px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-group {
+  width: 100%;
+}
+
+.full {
+  grid-column: 1/3;
+}
+
+/* INPUT */
+
+input,
+textarea {
+  transition: 0.3s;
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  padding: 14px;
+
+  border-radius: 10px;
+
+  border: 1px solid #ccc;
+
+  font-size: 15px;
+}
+
+/* BUTTON */
+
+button {
+  grid-column: 1/3;
+
+  padding: 16px;
+
+  background: var(--primary);
+
+  color: white;
+
+  border: none;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+/* SUCCESS TEXT */
+
+#success {
+  margin-top: 15px;
+  text-align: center;
+  color: green;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .reservation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px;
+  }
+
+  .btn_back {
+    background: #17b890;
+    color: white;
+
+    padding: 10px 16px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+  }
+
+  /* SECTION */
+
+  .reservation {
+    display: flex;
+    justify-content: center;
+
+    padding: 20px;
+  }
+
+  /* CARD */
+
+  .booking-card {
+    width: 100%;
+    max-width: 420px;
+
+    padding: 30px 25px;
+
+    border-radius: 20px;
+  }
+
+  /* FORM */
+
+  #bookingForm {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+  }
+
+  /* INPUT */
+
+  input,
+  textarea {
+    width: 100%;
+
+    padding: 16px;
+
+    border-radius: 12px;
+
+    border: 1px solid #ccc;
+
+    font-size: 15px;
+  }
+
+  /* BUTTON */
+
+  button {
+    margin-top: 10px;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #17b890;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+  }
+
+  button:hover {
+    opacity: 0.9;
+  }
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  border-radius: 15px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  .burger {
+    display: flex;
+  }
+  header h1 {
+    font-size: 20px;
+  }
+  nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+
+    width: 70%;
+    height: 100vh;
+
+    background: var(--glass);
+    backdrop-filter: blur(18px);
+
+    flex-direction: column;
+    padding-top: 120px;
+
+    transition: 0.4s;
+  }
+
+  nav a {
+    display: block;
+    margin: 20px;
+    font-size: 18px;
+  }
+
+  nav.active {
+    right: 0;
+  }
+
+  .hero h2 {
+    font-size: 32px;
+  }
+}
+
