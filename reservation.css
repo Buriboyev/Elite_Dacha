@@ -452,3 +452,14 @@ footer {
   }
 }
 
+.swal-light {
+  background: #ffffff;
+  color: #111;
+  border-radius: 12px;
+}
+
+.swal-dark {
+  background: #1f2937;
+  color: #fff;
+  border-radius: 12px;
+}
