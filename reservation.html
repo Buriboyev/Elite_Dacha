@@ -1,46 +1,76 @@
 <!doctype html>
 <html lang="uz">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Bron qilish</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
-    />
-    <link rel="stylesheet" href="reservation.css" />
-  </head>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <body>
-    <header class="reservation-header">
-      <h2>Bron qilish</h2>
-      <div class="reservation-header-right">
-        <a class="btn_back" href="index.html">← Orqaga</a>
-        <button id="themeToggle">🌙</button>
-      </div>
-    </header>
-    <section class="reservation">
-      <div class="booking-card">
-        <form  id="bookingForm">
-          <input type="text" placeholder="Ismingiz" required />
+  <title>Bron qilish</title>
 
-          <input
-            type="tel"
-            id="phone"
-            placeholder="+998 XX XXX XX XX"
-            required
-          />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <link rel="stylesheet" href="reservation.css" />
+</head>
 
-          <input type="text" id="date" placeholder="Sana tanlang" />
-          <textarea placeholder="Qo'shimcha ma'lumot (odam soni va hokazo)"></textarea>
+<body>
 
-          <button type="submit">Bron qilish</button>
-        </form>
-      </div>
-    </section>
+<header class="reservation-header">
+  <h2>Bron qilish</h2>
 
-    <script src="script.js"></script>
-    <script  src="reservation.js"></script>
-  </body>
+  <div class="reservation-header-right">
+    <a class="btn_back" href="index.html">← Orqaga</a>
+    <button id="themeToggle">🌙</button>
+  </div>
+</header>
+
+<section class="reservation">
+  <div class="booking-card">
+
+    <form id="bookingForm">
+
+      <input
+        type="text"
+        id="name"
+        placeholder="Ismingiz"
+        required
+      />
+
+      <input
+        type="tel"
+        id="phone"
+        placeholder="+998 __ ___ __ __"
+        required
+      />
+
+      <input
+        type="text"
+        id="date"
+        placeholder="Sana tanlang"
+        required
+      />
+
+      <input
+        type="number"
+        id="guests"
+        placeholder="Odamlar soni"
+        min="1"
+        max="75"
+        required
+      />
+
+      <button type="submit">Joy band qilish</button>
+
+    </form>
+
+  </div>
+</section>
+
+
+<!-- JS kutubxonalar -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Sizning JS -->
+<script src="script.js"></script>
+<script src="reservation.js"></script>
+
+</body>
 </html>
