@@ -1,5 +1,10 @@
+// TELEFON FORMAT
 const phoneInput = document.getElementById("phone");
-
+function getSwalTheme() {
+  return document.body.classList.contains("dark")
+    ? "swal-dark"
+    : "swal-light";
+}
 phoneInput.addEventListener("input", function () {
   let numbers = phoneInput.value.replace(/\D/g, "");
 
@@ -30,62 +35,86 @@ phoneInput.addEventListener("input", function () {
   phoneInput.value = formatted;
 });
 
-const TOKEN = "7439506932:AAFvrYTvLEnlRd1_QTKtruU2NHedVamdKWk"
-const CHAT_ID = "-1003768294685"
 
-const form = document.getElementById("bookingForm")
+// TELEGRAM BOT
+const TOKEN = "7439506932:AAFvrYTvLEnlRd1_QTKtruU2NHedVamdKWk";
+const CHAT_ID = "-1003768294685";
 
-form.addEventListener("submit",(e)=>{
+const form = document.getElementById("bookingForm");
 
-e.preventDefault()
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-let name = form[0].value
-let phone = form[1].value
-let date = form[2].value
-let message = form[3].value
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const date = document.getElementById("date").value;
+  const guests = document.getElementById("guests").value;
 
-let text = `
+  if (!date) {
+    Swal.fire({
+      icon: "warning",
+      title: "Sanani tanlang!"
+    });
+    return;
+  }
+
+  let text = `
 🟢 Yangi bron!
 
 👤 Ism: ${name}
 📞 Telefon: ${phone}
 📅 Sana: ${date}
-💬 Xabar: ${message}
-`
+👥 Odamlar soni: ${guests}
+`;
 
-fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`,{
+  fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: text
+    })
+  })
+  .then(() => {
 
-method:"POST",
+  Swal.fire({
+    icon: "success",
+    title: "Bron muvaffaqiyatli yuborildi!",
+    text: "Tez orada siz bilan bog'lanamiz",
+    confirmButtonText: "Bosh sahifaga o'tish",
+    confirmButtonColor: "#16a34a",
+    customClass: {
+      popup: getSwalTheme()
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = "index.html";
+    }
+  });
 
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-chat_id:CHAT_ID,
-text:text
-
-})
-
-})
-
-.then(()=>{
-
-alert("Bron yuborildi!")
-
-form.reset()
-
-})
-
-.catch(()=>{
-
-alert("Xatolik yuz berdi")
-
-})
+  form.reset();
 
 })
+.catch(() => {
+
+  Swal.fire({
+    icon: "error",
+    title: "Xatolik yuz berdi!",
+    text: "Iltimos qayta urinib ko'ring",
+    confirmButtonText: "Yopish",
+    confirmButtonColor: "#dc2626",
+    customClass: {
+      popup: getSwalTheme()
+    }
+  });
+
+});
+});
+
+// DATE PICKER
 flatpickr("#date", {
-dateFormat: "Y-m-d",
-minDate: "today"
-})
+  dateFormat: "Y-m-d",
+  minDate: "today"
+});
