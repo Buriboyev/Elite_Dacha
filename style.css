@@ -52,7 +52,6 @@ header {
   -webkit-backdrop-filter: blur(15px);
 
   border-bottom: 1px solid var(--border);
-  border-radius: 0px 0px 15px 15px;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -61,7 +60,9 @@ header {
 header h1 {
   font-size: 26px;
 }
-
+header nav a:hover{
+  transform: scale(1.1);
+}
 /* NAV */
 
 nav {
@@ -79,21 +80,14 @@ nav a {
 nav a:hover {
   color: var(--primary);
 }
-@media (max-width:768px){
+@media (max-width: 768px) {
+  nav {
+    display: none;
+  }
 
-nav{
-
-display:none;
-
-
-
-
-}
-
-header h1{
-  font-size: 20px;}
-
-
+  header h1 {
+    font-size: 20px;
+  }
 }
 /* THEME BUTTON */
 
@@ -247,6 +241,8 @@ section {
 
 .about-card:hover {
   transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 0 25px 1px var(--text);
+
 }
 
 .about-card h3 {
@@ -281,6 +277,8 @@ section {
 
 .gallery img:hover {
   transform: scale(1.05);
+    box-shadow: 0 0 15px 1px var(--text);
+
 }
 
 /* ================= MAP ================= */
@@ -323,6 +321,8 @@ iframe {
 
 .contact-card:hover {
   transform: translateY(-6px);
+    box-shadow: 0 0 25px 1px var(--text);
+
 }
 
 .contact-card h3 {
@@ -338,3 +338,25 @@ iframe {
 /* ================= FORM ================= */
 
 /* RESERVATION PAGE */
+.footer {
+  display: flex;
+  justify-content: center;
+  color: var(--text);
+  font-size: 20px;
+  background: var(--bg);
+  padding: 50px;
+  border-radius: 15px;
+    box-shadow: 0 0 25px 1px var(--text);
+
+transition: 0.3s;
+}
+@media (max-width: 768px) {
+  .footer {
+    font-size: 16px;
+    padding: 30px;
+  }
+}
+.footer:hover{
+transform: scale(1.05);
+
+}
