@@ -27,7 +27,16 @@ body {
   --border: rgba(255, 255, 255, 0.1);
 }
 /* PAGE TRANSITION */
-
+#themeToggle {
+  
+  background: var(--text);
+  border: none;
+  padding: 8px ;
+  border-radius: 50%;
+ 
+  cursor: pointer;
+  color: white;
+}
 body {
   background: var(--bg);
   color: var(--text);
