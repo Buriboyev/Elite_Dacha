@@ -27,16 +27,7 @@ body {
   --border: rgba(255, 255, 255, 0.1);
 }
 /* PAGE TRANSITION */
-#themeToggle {
-  
-  background: var(--text);
-  border: none;
-  padding: 8px ;
-  border-radius: 50%;
- 
-  cursor: pointer;
-  color: white;
-}
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -55,6 +46,7 @@ body {
   background: var(--primary);
   color: white;
   padding: 10px 16px;
+  margin-right: 10px;
   border-radius: 8px;
 }
 
@@ -471,4 +463,54 @@ footer {
   background: #1f2937;
   color: #fff;
   border-radius: 12px;
+}
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  --background: #ffffff;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background);
+  transition: .5s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 50%;
+  left: 10%;
+  bottom: 15%;
+  box-shadow: inset 8px -4px 0px 0px hwb(0 0% 100%);
+  background: var(--background);
+  transition: .5s;
+}
+
+input:checked + .slider {
+  background-color: #000000;
+}
+
+input:checked + .slider:before {
+  transform: translateX(100%);
+  box-shadow: inset 15px -4px 0px 15px #ffffff;
 }
