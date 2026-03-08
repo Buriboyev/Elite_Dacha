@@ -1,4 +1,4 @@
-const toggle = document.getElementById("themeToggle");
+const toggle = document.querySelector(".switch input");
 let rotation = 0;
 // SAQLANGAN THEME
 const savedTheme = localStorage.getItem("theme");
@@ -13,14 +13,12 @@ if (savedTheme === "dark") {
 toggle.addEventListener("click", () => {
 
   // 360 gradus qo'shib boradi
-  rotation += 360;
-  toggle.style.transform = `rotate(${rotation}deg)`;
 
   document.body.classList.toggle("dark");
 
   if (document.body.classList.contains("dark")) {
     localStorage.setItem("theme","dark");
-    toggle.textContent = "☀️";
+    toggle.textContent = "";
   } else {
     localStorage.setItem("theme","light");
     toggle.textContent = "🌙";
