@@ -481,7 +481,7 @@ footer {
 
 /* The slider */
 .slider {
-  --background: #ffffff;
+  background: #ffffff;
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -514,3 +514,4 @@ input:checked + .slider:before {
   transform: translateX(100%);
   box-shadow: inset 15px -4px 0px 15px #ffffff;
 }
+
