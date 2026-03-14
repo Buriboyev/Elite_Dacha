@@ -11,19 +11,17 @@ const SECRET_HASH = "ZWxpdGUyMDI2YWRtaW4=";
 // ===========================
 function checkLogin() {
   const input = document.getElementById("loginInput").value;
-  const err = document.getElementById("loginError");
+  const err   = document.getElementById("loginError");
 
   if (btoa(input) === SECRET_HASH) {
-    // Ruxsat berildi → admin.html ga o't
-    sessionStorage.setItem("adminAuth", "granted");
-    window.location.href = "admin.html"; // ← bu yagona to'g'ri yo'l
+    // URL token bilan admin.html ga o't — GitHub Pages da ham ishlaydi
+    const token = btoa("elite2026admin" + new Date().toDateString());
+    window.location.href = "admin.html?auth=" + token;
   } else {
     err.style.display = "block";
     document.getElementById("loginInput").value = "";
     document.getElementById("loginInput").focus();
-    setTimeout(() => {
-      err.style.display = "none";
-    }, 2000);
+    setTimeout(() => { err.style.display = "none"; }, 2000);
   }
 }
 
@@ -34,7 +32,7 @@ function checkLogin() {
 // ===========================
 (function guardPage() {
   if (sessionStorage.getItem("adminAuth") === "granted") {
-    window.location.href = "admin.html";
+    const token = btoa("elite2026admin" + new Date().toDateString());
+    window.location.href = "admin.html?auth=" + token;
   }
-  // Aks holda login formasi ko'rinadi (HTML da display:flex)
 })();
