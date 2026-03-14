@@ -1,59 +1,67 @@
+// ===========================
+//  THEME TOGGLE
+// ===========================
 const toggle = document.querySelector(".switch input");
-let rotation = 0;
-// SAQLANGAN THEME
-const savedTheme = localStorage.getItem("theme");
 
+const savedTheme = localStorage.getItem("theme");
 if (savedTheme === "dark") {
   document.body.classList.add("dark");
-  toggle.textContent = "☀️";
-} else {
-  toggle.textContent = "🌙";
+  toggle.checked = true;
 }
 
-toggle.addEventListener("click", () => {
-
-  // 360 gradus qo'shib boradi
-
+toggle.addEventListener("change", () => {
   document.body.classList.toggle("dark");
-
-  if (document.body.classList.contains("dark")) {
-    localStorage.setItem("theme","dark");
-    toggle.textContent = "";
-  } else {
-    localStorage.setItem("theme","light");
-    toggle.textContent = "🌙";
-  }
-
+  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
 });
-const scrollTop = document.getElementById("scrollTop");
 
-if(scrollTop){
+// ===========================
+//  SCROLL TOP — FOOTER MATNI
+// ===========================
+const scrollTop = document.getElementById("scrollTop");
+if (scrollTop) {
+  scrollTop.style.cursor = "pointer";
   scrollTop.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
+
+// ===========================
+//  SCROLL TOP BUTTON (fixed)
+// ===========================
 const scrollBtn = document.getElementById("scrollTopBtn");
-
-// scroll bo'lganda tugma chiqadi
-window.addEventListener("scroll", () => {
-
-if(window.scrollY > 200){
-scrollBtn.classList.add("show");
-}else{
-scrollBtn.classList.remove("show");
+if (scrollBtn) {
+  window.addEventListener("scroll", () => {
+    scrollBtn.classList.toggle("show", window.scrollY > 200);
+  });
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 }
 
-});
+// ===========================
+//  MAXFIY ADMIN TRIGGER
+//  Footer pastki o'ng burchak (60x60px yashirin zona)
+//  3 soniya ichida 5 marta bosing → admin.html ga o'tadi
+// ===========================
+const adminTrigger = document.getElementById("adminSecretTrigger");
 
-// tugma bosilganda tepaga chiqadi
-scrollBtn.addEventListener("click", () => {
+if (adminTrigger) {
+  let tapCount = 0;
+  let tapTimer = null;
 
-window.scrollTo({
-top: 0,
-behavior: "smooth"
-});
+  adminTrigger.addEventListener("click", () => {
+    tapCount++;
+    clearTimeout(tapTimer);
 
-});
+    if (tapCount >= 5) {
+      tapCount = 0;
+      // Parolsiz to'g'ridan admin.html ga o'tadi
+      sessionStorage.setItem("adminAuth", "granted");
+      window.location.href = "admin.html";
+      return;
+    }
+
+    // 3 soniya ichida bosilmasa, hisobni nolga qaytaradi
+    tapTimer = setTimeout(() => { tapCount = 0; }, 3000);
+  });
+}
