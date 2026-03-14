@@ -1,11 +1,25 @@
 // ===========================
 //  KIRISH TEKSHIRUVI
-//  sessionStorage da "granted" bo'lmasa
-//  index.html ga qaytaradi
+//  Sahifa visibility:hidden holda keladi
+//  Token to'g'ri bo'lsa — ko'rsatadi
+//  Noto'g'ri bo'lsa — redirect qiladi
 // ===========================
 (function guardPage() {
-  if (sessionStorage.getItem("adminAuth") !== "granted") {
-    window.location.href = "index.html";
+  const params   = new URLSearchParams(window.location.search);
+  const urlToken = params.get("auth");
+  const expected = btoa("elite2026admin" + new Date().toDateString());
+
+  if (urlToken === expected) {
+    // URL token to'g'ri — sessionga yoz, URLni tozala, sahifani ko'rsat
+    sessionStorage.setItem("adminAuth", "granted");
+    history.replaceState({}, "", window.location.pathname);
+    document.body.style.visibility = "visible";
+  } else if (sessionStorage.getItem("adminAuth") === "granted") {
+    // Sessiyada bor — sahifani ko'rsat
+    document.body.style.visibility = "visible";
+  } else {
+    // Ruxsat yo'q — redirect, sahifa ko'rinmaydi (visibility:hidden qoladi)
+    window.location.replace("index.html");
   }
 })();
 
@@ -14,15 +28,9 @@
 // ===========================
 const STORAGE_KEY = "elite_dacha_bookings";
 
-// ===========================
-//  STATE
-// ===========================
 let bookings = [];
 let editId   = null;
 
-// ===========================
-//  DOM
-// ===========================
 const tbody        = document.getElementById("tbody");
 const emptyDiv     = document.getElementById("empty");
 const searchInput  = document.getElementById("search");
@@ -40,9 +48,6 @@ function init() {
   bindEvents();
 }
 
-// ===========================
-//  STORAGE
-// ===========================
 function loadFromStorage() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -54,23 +59,22 @@ function saveToStorage() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
 }
 
-// ===========================
-//  DEMO DATA
-// ===========================
+function seedDemoData() {
+  bookings = [
+    { id:1, name:"Jasur Toshmatov",  phone:"+998 90 123 45 67", date:"2026-03-20", guests:8,  status:"confirmed", received:"2026-03-12" },
+    { id:2, name:"Dilnoza Yusupova", phone:"+998 93 456 78 90", date:"2026-03-22", guests:12, status:"new",       received:"2026-03-13" },
+    { id:3, name:"Bobur Karimov",    phone:"+998 99 111 22 33", date:"2026-03-25", guests:5,  status:"new",       received:"2026-03-14" },
+    { id:4, name:"Zulfiya Rahimova", phone:"+998 91 777 88 99", date:"2026-03-18", guests:20, status:"cancelled", received:"2026-03-10" },
+  ];
+  saveToStorage();
+}
 
-
-// ===========================
-//  STATS
-// ===========================
 function updateStats() {
   document.getElementById("s-total").textContent  = bookings.length;
   document.getElementById("s-new").textContent    = bookings.filter(b => b.status === "new").length;
-  document.getElementById("s-guests").textContent = bookings.reduce((s,b) => s + (parseInt(b.guests)||0), 0);
+  document.getElementById("s-guests").textContent = bookings.reduce((s,b) => s+(parseInt(b.guests)||0), 0);
 }
 
-// ===========================
-//  RENDER TABLE
-// ===========================
 function render() {
   const q  = searchInput.value.toLowerCase().trim();
   const st = filterSelect.value;
@@ -109,9 +113,6 @@ function render() {
   }).join("");
 }
 
-// ===========================
-//  EVENTS
-// ===========================
 function bindEvents() {
   searchInput.addEventListener("input", render);
   filterSelect.addEventListener("change", render);
@@ -122,14 +123,11 @@ function bindEvents() {
   document.getElementById("saveModal").addEventListener("click", saveModal);
   document.getElementById("logoutBtn").addEventListener("click", () => {
     sessionStorage.removeItem("adminAuth");
-    window.location.href = "index.html";
+    window.location.replace("index.html");
   });
   modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
 }
 
-// ===========================
-//  MODAL
-// ===========================
 function openAdd() {
   editId = null;
   document.getElementById("modal-title").textContent = "Bron qo'shish";
@@ -192,9 +190,6 @@ function clearAll() {
   saveToStorage(); updateStats(); render();
 }
 
-// ===========================
-//  EXPORT CSV
-// ===========================
 function exportCSV() {
   const header = ["Ism","Telefon","Sana","Mehmonlar","Status","Qabul qilingan"];
   const rows   = bookings.map(b => [b.name,b.phone,b.date,b.guests,b.status,b.received]);
@@ -206,19 +201,15 @@ function exportCSV() {
   URL.revokeObjectURL(url);
 }
 
-// ===========================
-//  HELPERS
-// ===========================
 function clearFields() {
   ["m-name","m-phone","m-date","m-guests"].forEach(id => document.getElementById(id).value="");
   document.getElementById("m-status").value = "new";
 }
 
 function esc(str) {
-  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  return String(str)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
-// ===========================
-//  START
-// ===========================
 init();
