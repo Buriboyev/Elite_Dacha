@@ -4,7 +4,7 @@
 //  O'zgartirish: konsolda btoa("yangi_parol")
 //  natijani SECRET_HASH ga yozing
 // ===========================
-const SECRET_HASH = "ZWxpdGUyMDI2YWRtaW4=";
+const SECRET_HASH = 'cXdlcnR5MTUxNQ==';
 
 // ===========================
 //  LOGIN TEKSHIRISH
