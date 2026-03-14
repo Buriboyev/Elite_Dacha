@@ -59,15 +59,7 @@ function saveToStorage() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
 }
 
-function seedDemoData() {
-  bookings = [
-    { id:1, name:"Jasur Toshmatov",  phone:"+998 90 123 45 67", date:"2026-03-20", guests:8,  status:"confirmed", received:"2026-03-12" },
-    { id:2, name:"Dilnoza Yusupova", phone:"+998 93 456 78 90", date:"2026-03-22", guests:12, status:"new",       received:"2026-03-13" },
-    { id:3, name:"Bobur Karimov",    phone:"+998 99 111 22 33", date:"2026-03-25", guests:5,  status:"new",       received:"2026-03-14" },
-    { id:4, name:"Zulfiya Rahimova", phone:"+998 91 777 88 99", date:"2026-03-18", guests:20, status:"cancelled", received:"2026-03-10" },
-  ];
-  saveToStorage();
-}
+
 
 function updateStats() {
   document.getElementById("s-total").textContent  = bookings.length;
