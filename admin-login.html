@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel — Elite Dacha</title>
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <!-- =====================
+       LOGIN OVERLAY
+       Sahifa ochilganda
+       parol tekshiriladi.
+       To'g'ri bo'lmasa
+       bu ekran ko'rinadi.
+  ===================== -->
+    <div
+      id="loginOverlay"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: #f4f6f8;
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 16px;
+        font-family: &quot;Segoe UI&quot;, sans-serif;
+      "
+    >
+      <div
+        style="
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 14px;
+          padding: 36px 32px;
+          width: 100%;
+          max-width: 340px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+          text-align: center;
+        "
+      >
+        <div style="font-size: 36px; margin-bottom: 8px">🔐</div>
+        <h2
+          style="
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #111;
+          "
+        >
+          Admin Panel
+        </h2>
+        <p style="font-size: 13px; color: #6b7280; margin-bottom: 24px">
+          Kirish uchun parolni kiriting
+        </p>
+
+        <input
+          id="loginInput"
+          type="password"
+          placeholder="Parol..."
+          style="
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 12px;
+            color: #111;
+            transition: border-color 0.2s;
+          "
+          onkeydown="if (event.key === 'Enter') checkLogin();"
+        />
+
+        <div
+          id="loginError"
+          style="
+            display: none;
+            color: #dc2626;
+            font-size: 12px;
+            margin-bottom: 10px;
+          "
+        >
+          ❌ Parol noto'g'ri!
+        </div>
+
+        <button
+          onclick="checkLogin()"
+          style="
+            width: 100%;
+            padding: 12px;
+            background: #00b894;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+          "
+          onmouseover="this.style.background = '#00a381'"
+          onmouseout="this.style.background = '#00b894'"
+        >
+          Kirish
+        </button>
+
+        <p style="margin-top: 16px; font-size: 12px; color: #9ca3af">
+          <a href="./index.html" style="color: #6b7280; text-decoration: none"
+            >← Bosh sahifaga qaytish</a
+          >
+        </p>
+      </div>
+    </div>
+<script src="./admin-login.js"></script>
+    <!-- =====================
+       ADMIN PANEL CONTENT
+  ===================== -->
+  </body>
+</html>
