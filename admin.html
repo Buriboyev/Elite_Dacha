@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elite Dacha — Admin Panel</title>
+  <link rel="icon" href="./images/logo.jpg">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
+</head>
+<body>
+  <div class="ap">
+
+    <!-- TOP BAR -->
+    <div class="ap-topbar">
+      <span class="ap-title">🏡 Elite Dacha — Admin Panel</span>
+      <div class="ap-topbar-actions">
+        <button class="ap-btn primary" id="addBtn">
+          <i class="fa-solid fa-plus"></i> Bron qo'shish
+        </button>
+        <!-- DARK MODE TOGGLE (Bug fix: was missing) -->
+        <label class="ap-switch" id="adminTheme" title="Qorong'i rejim">
+          <input type="checkbox" id="adminDarkToggle">
+          <span class="ap-slider"></span>
+        </label>
+        <!-- LOGOUT (Bug fix: was missing from HTML) -->
+        <button class="ap-btn danger" id="logoutBtn" title="Chiqish">
+          <i class="fa-solid fa-right-from-bracket"></i> Chiqish
+        </button>
+      </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="ap-note">
+      <i class="fa-solid fa-circle-info"></i>
+      Bronlar Firebase Realtime Database orqali real vaqt rejimida sinxronlanadi.
+      Yangi bronlar avtomatik ro'yxatga tushadi va admin panel darhol yangilanadi.
+    </div>
+
+    <!-- STATS -->
+    <div class="ap-stats">
+      <div class="ap-stat">
+        <div class="ap-stat-n" id="s-total">0</div>
+        <div class="ap-stat-l">Jami bronlar</div>
+      </div>
+      <div class="ap-stat">
+        <div class="ap-stat-n blue" id="s-new">0</div>
+        <div class="ap-stat-l">Yangi / kutilayotgan</div>
+      </div>
+      <div class="ap-stat">
+        <div class="ap-stat-n green" id="s-confirmed">0</div>
+        <div class="ap-stat-l">Tasdiqlangan</div>
+      </div>
+      <div class="ap-stat">
+        <div class="ap-stat-n" id="s-guests">0</div>
+        <div class="ap-stat-l">Jami mehmonlar</div>
+      </div>
+    </div>
+
+    <!-- CHART -->
+    <div class="ap-chart-wrap">
+      <div class="ap-chart-title">📊 Oylik bronlar statistikasi</div>
+      <canvas id="bookingChart" height="100"></canvas>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="ap-filters">
+      <input class="ap-search" id="search" placeholder="🔍 Ism yoki telefon bo'yicha qidirish...">
+      <select class="ap-select" id="filterStatus">
+        <option value="">Barcha statuslar</option>
+        <option value="new">Yangi</option>
+        <option value="confirmed">Tasdiqlangan</option>
+        <option value="cancelled">Bekor qilingan</option>
+      </select>
+      <input type="date" class="ap-select" id="filterDate" title="Sana bo'yicha filter">
+      <button class="ap-btn" id="exportBtn"><i class="fa-solid fa-download"></i> CSV</button>
+      <button class="ap-btn danger" id="clearBtn"><i class="fa-solid fa-trash"></i> Hammasini o'chirish</button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="ap-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Ism</th>
+            <th>Telefon</th>
+            <th>Sana</th>
+            <th>Mehmonlar</th>
+            <th>Izoh</th>
+            <th>Status</th>
+            <th>Qabul qilingan</th>
+            <th>Amallar</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div id="empty" class="ap-empty">Bronlar topilmadi.</div>
+    </div>
+
+  </div>
+
+  <!-- ADD/EDIT MODAL -->
+  <div class="ap-modal-bg" id="modal">
+    <div class="ap-modal">
+      <h3 id="modal-title">Bron qo'shish</h3>
+
+      <div class="ap-field">
+        <label>Ism</label>
+        <input id="m-name" placeholder="To'liq ism">
+      </div>
+      <div class="ap-field">
+        <label>Telefon</label>
+        <input id="m-phone" placeholder="+998 __ ___ __ __">
+      </div>
+      <div class="ap-field">
+        <label>Sana</label>
+        <input id="m-date" type="date">
+      </div>
+      <div class="ap-field">
+        <label>Mehmonlar soni</label>
+        <input id="m-guests" type="number" min="1" max="75" placeholder="1–75">
+      </div>
+      <div class="ap-field">
+        <label>Izoh</label>
+        <input id="m-comment" placeholder="Ixtiyoriy izoh">
+      </div>
+      <div class="ap-field">
+        <label>Status</label>
+        <select id="m-status">
+          <option value="new">Yangi</option>
+          <option value="confirmed">Tasdiqlangan</option>
+          <option value="cancelled">Bekor qilingan</option>
+        </select>
+      </div>
+
+      <div class="ap-modal-footer">
+        <button class="ap-btn" id="cancelModal">Bekor qilish</button>
+        <button class="ap-btn primary" id="saveModal">Saqlash</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+  <script src="./firebase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

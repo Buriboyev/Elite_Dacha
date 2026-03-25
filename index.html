@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elite Dacha Sangardak</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <link rel="icon" style="border-radius: 50%" href="images/logo.jpg" />
+  </head>
+  <button id="scrollTopBtn">↑</button>
+  <body>
+    <div id="navOverlay"></div>
+
+    <header>
+      <h1>
+        <i class="fa-solid fa-house" style="color: var(--text)"></i> Elite Dacha
+        Sangardak
+      </h1>
+
+      <nav id="mainNav">
+        <a class="navs" href="#about">Biz haqimizda</a>
+        <a class="navs" href="#gallery">Galereya</a>
+        <a class="navs" href="#pricing">Narxlar</a>
+        <a class="navs" href="#location">Joylashuv</a>
+        <a class="navs" href="reservation.html">Joy band qilish</a>
+      </nav>
+      <div style="display: flex; gap: 15px; align-items: center">
+        <label class="switch" id="themeToggle">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+        <button class="burger" id="burgerBtn" aria-label="Menyu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <canvas id="particles"></canvas>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge fade-up" style="animation-delay: 0.1s">
+          <i class="fa-solid fa-star"></i> Sangardak, O'zbekiston
+        </div>
+        <h2 class="fade-up" style="animation-delay: 0.25s">
+          Sangardakdagi<br /><span class="accent-text">Premium</span> Dam Olish
+          Maskani
+        </h2>
+        <p class="fade-up" style="animation-delay: 0.45s">
+          Tabiat qo'ynida hashamatli dam olish
+        </p>
+        <div class="hero-btns fade-up" style="animation-delay: 0.6s">
+          <a href="reservation.html" class="btn btn-primary">
+            <i class="fa-regular fa-calendar-check"></i> Bron qilish
+          </a>
+        </div>
+      </div>
+      <div class="hero-scroll-hint fade-up" style="animation-delay: 1s">
+        <span>Pastga aylantiring</span>
+        <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+      </div>
+    </section>
+
+    <section class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <div class="stat-num" data-target="75">0</div>
+          <div class="stat-label">Maksimal mehmonlar</div>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-num" data-target="5">0</div>
+          <div class="stat-label">Yillik tajriba</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num" data-target="3000">0</div>
+          <div class="stat-label">Mamnun mehmonlar</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title reveal">
+        <i
+          class="fa-solid fa-circle-info"
+          style="color: rgb(255, 255, 255)"
+        ></i>
+        Biz haqimizda
+      </h2>
+
+      <p class="about-text">
+        Elite Dacha — Sangardak tog'lari bag'rida joylashgan zamonaviy dam olish
+        maskani. Bu yerda siz tabiat qo'ynida oila va do'stlaringiz bilan
+        unutilmas dam olishingiz mumkin.
+      </p>
+
+      <div class="about-cards reveal">
+        <div class="about-card reveal">
+          <h3>🏊 Basseyn</h3>
+          <p>Toza va zamonaviy basseynda salqin dam oling.</p>
+        </div>
+
+        <div class="about-card reveal">
+          <h3>
+            <i
+              class="fa-sharp-duotone fa-light fa-grill-hot"
+              style="
+                --fa-primary-color: rgb(255, 255, 255);
+                --fa-secondary-color: rgb(255, 255, 255);
+              "
+            ></i>
+            Tandir & Barbekyu
+          </h3>
+          <p>Do'stlaringiz bilan mazali ovqatlar tayyorlash imkoniyati.</p>
+        </div>
+
+        <div class="about-card reveal">
+          <h3>🌳 Tabiat</h3>
+          <p>Sangardakning go'zal tabiati va toza havosi.</p>
+        </div>
+
+        <div class="about-card reveal">
+          <h3>
+            <i class="fa-brands fa-playstation" style="color: --text"></i>
+            PlayStation
+          </h3>
+          <p>Maroqli o'yinlar bilan vaqt o'tkazish imkoniyati.</p>
+        </div>
+
+        <div class="about-card reveal">
+          <h3>
+            <i class="fa-solid fa-microphone" style="color: var(--text)"></i>
+            Karaoke
+          </h3>
+          <p>Qo'shiqlar bilan vaqt o'tkazish imkoniyati.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="reveal">
+      <h2
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          font-size: 30px;
+        "
+      >
+        <i class="fa-regular fa-images"></i> Galereya
+      </h2>
+
+      <div class="gallery">
+        <img class="reveal" src="images/1.jpg" />
+        <img class="reveal" src="images/2.jpg" />
+        <img class="reveal" src="images/3.jpg" />
+        <img class="reveal" src="images/4.jpg" />
+        <img class="reveal" src="images/5.jpg" />
+        <img class="reveal" src="images/6.jpg" />
+        <img class="reveal" src="images/7.jpg" />
+        <img class="reveal" src="images/8.jpg" />
+      </div>
+    </section>
+
+    <section id="pricing">
+      <h2 class="section-title reveal">
+        <i class="fa-solid fa-tag"></i> Narxlar
+      </h2>
+      <p class="about-text reveal">
+        Qulay narxlarda hashamatli dam olish. Bron qilish uchun murojaat qiling.
+      </p>
+      <div class="pricing-grid">
+        <!-- KARTA 1: 150,000 (200,000 chizib tashlangan) -->
+        <div class="pricing-card reveal">
+          <div class="pricing-label">
+            Kunlik ijara
+            <span
+              style="
+                color: red;
+                font-size: 18px;
+                font-family:
+                  &quot;Trebuchet MS&quot;, &quot;Lucida Sans Unicode&quot;,
+                  &quot;Lucida Grande&quot;, &quot;Lucida Sans&quot;, Arial,
+                  sans-serif;
+                font-weight: 1000;
+              "
+              >CHEGIRMA</span
+            >
+          </div>
+          <div class="pricing-price-wrap">
+            <span class="price-old reveal">200 000 so'm</span>
+            <span class="price-new reveal" ><span class="stat-num" data-target="150000">0</span> so'm</span>
+          </div>
+          <div class="pricing-sub">Dushanba – Payshanba</div>
+          <ul class="pricing-features">
+            <li><i class="fa-solid fa-check"></i> Basseyn</li>
+            <li><i class="fa-solid fa-check"></i> Tandir &amp; Barbekyu</li>
+            <li><i class="fa-solid fa-check"></i> Karaoke</li>
+            <li><i class="fa-solid fa-check"></i> PlayStation</li>
+            <li><i class="fa-solid fa-check"></i> Chiroyli tabiat</li>
+          </ul>
+          <a href="reservation.html" class="pricing-btn">Bron qilish</a>
+        </div>
+
+        <!-- KARTA 2: 200,000 (eng mashhur) -->
+        <div
+          class="pricing-card pricing-featured reveal"
+          style="animation-delay: 0.1s"
+        >
+          <div class="pricing-badge">Eng mashhur</div>
+          <div class="pricing-label">Dam olish kunlari</div>
+          <div class="pricing-price-wrap">
+            <span class="price-new reveal">200 000 so'm</span>
+          </div>
+          <div class="pricing-sub">Juma – Yakshanba</div>
+          <ul class="pricing-features">
+            <li><i class="fa-solid fa-check"></i> Basseyn</li>
+            <li><i class="fa-solid fa-check"></i> Tandir &amp; Barbekyu</li>
+            <li><i class="fa-solid fa-check"></i> Karaoke</li>
+            <li><i class="fa-solid fa-check"></i> PlayStation</li>
+            <li><i class="fa-solid fa-check"></i> Chiroyli tabiat</li>
+          </ul>
+          <a href="reservation.html" class="pricing-btn">Bron qilish</a>
+        </div>
+
+        <!-- KARTA 3: Narx so'rash uchun bog'laning -->
+        <div class="pricing-card reveal" style="animation-delay: 0.2s">
+          <div class="pricing-label">Alohida narx</div>
+          <div class="pricing-price-wrap">
+            <span class="price-new price-contact reveal"
+              >Butun hudud ijarasi</span
+            >
+          </div>
+          <div class="pricing-sub">75 kishigacha</div>
+          <ul class="pricing-features">
+            <li><i class="fa-solid fa-check"></i> Basseyn</li>
+            <li><i class="fa-solid fa-check"></i> Tandir &amp; Barbekyu</li>
+            <li><i class="fa-solid fa-check"></i> Karaoke</li>
+            <li><i class="fa-solid fa-check"></i> PlayStation</li>
+            <li>
+              <i class="fa-solid fa-check"></i> Butun hudud sizning hohshingizda
+            </li>
+          </ul>
+          <a href="tel:+998937900200" class="pricing-btn pricing-btn-call">
+            <i class="fa-solid fa-phone"></i> Narxni bilish uchun bog'laning
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="location" class="reveal">
+      <h2
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          font-size: 30px;
+        "
+      >
+        <i class="fa-solid fa-map-marker-alt"></i> Joylashuv
+      </h2>
+
+      <iframe
+        src="https://maps.google.com/maps?q=38.545268,67.544153&z=15&output=embed"
+      >
+      </iframe>
+    </section>
+
+    <section id="contact">
+      <h2
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          font-size: 30px;
+        "
+      >
+        <i class="fa-solid fa-phone" style="color: var(--text)"></i> Bog'lanish
+      </h2>
+
+      <div class="contact-grid reveal">
+        <div class="contact-card reveal">
+          <h3>
+            <i class="fa-solid fa-phone" style="color: var(--text)"></i> Telefon
+          </h3>
+          <p>
+            <a href="tel:+998997381515">+998 99 738 15 15</a>
+          </p>
+          <p>
+            <a href="tel:+998937900200">+998 93 790 02 00</a>
+          </p>
+        </div>
+
+        <div class="contact-card reveal">
+          <h3><i class="fa-brands fa-telegram"></i> Telegram</h3>
+          <p>
+            <a href="https://t.me/Sangardakelitdacha">@Sangardakelitdacha</a>
+          </p>
+        </div>
+
+        <div class="contact-card reveal">
+          <h3><i class="fa-brands fa-instagram"></i> Instagram</h3>
+          <p>
+            <a
+              href="https://www.instagram.com/elite_dacha?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              >@elite_dacha</a
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer reveal" id="adminSecretTrigger">
+      <a id="scrollTop">© 2026 Elite Dacha Sangardak</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
