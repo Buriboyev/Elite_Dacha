@@ -1,0 +1,93 @@
+html {
+  scroll-behavior: smooth;
+}
+* {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+
+}
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-loading,
+.not-found-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top, rgba(0, 184, 148, 0.12), transparent 40%),
+    #0f172a;
+  color: #f8fafc;
+}
+
+.app-loading {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.not-found-card {
+  width: min(100%, 460px);
+  padding: 32px;
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.45);
+  text-align: center;
+}
+
+.not-found-code {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #5eead4;
+}
+
+.not-found-card h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.not-found-card p {
+  margin: 14px 0 0;
+  color: rgba(248, 250, 252, 0.8);
+}
+
+.not-found-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: linear-gradient(135deg, #14b8a6, #22c55e);
+  color: #fff;
+  font-weight: 700;
+}

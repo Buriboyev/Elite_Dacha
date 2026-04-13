@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      (function () {
+        var locationData = window.location;
+        var segments = locationData.pathname.split('/').filter(Boolean);
+        var hasProjectBase = segments.length > 1;
+        var projectBase = hasProjectBase ? '/' + segments[0] : '';
+        var routeSegments = hasProjectBase ? segments.slice(1) : segments;
+        var route = routeSegments.length ? '/' + routeSegments.join('/') : '/';
+        var redirectTarget =
+          projectBase +
+          '/?gh_route=' +
+          encodeURIComponent(route + locationData.search + locationData.hash);
+
+        locationData.replace(redirectTarget);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
