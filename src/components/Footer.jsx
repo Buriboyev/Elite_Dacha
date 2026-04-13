@@ -14,7 +14,6 @@ export default function Footer() {
   }, [])
 
   const handleFooterClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
     clickCountRef.current += 1
 
     window.clearTimeout(resetTimerRef.current)
