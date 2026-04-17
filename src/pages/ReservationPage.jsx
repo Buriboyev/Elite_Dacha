@@ -50,6 +50,10 @@ export default function ReservationPage() {
       fpRef.current = flatpickr(dateRef.current, {
         dateFormat: 'Y-m-d',
         minDate: 'today',
+        disableMobile: true,
+        monthSelectorType: 'static',
+        prevArrow: '<span aria-hidden="true">‹</span>',
+        nextArrow: '<span aria-hidden="true">›</span>',
         onChange: ([date], dateStr) => {
           setForm((prev) => ({ ...prev, date: dateStr }))
         },
