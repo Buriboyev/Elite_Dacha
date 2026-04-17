@@ -555,12 +555,13 @@ body.dark .gallery-nav-btn {
   align-items: stretch;
   gap: 18px;
   overflow-x: auto;
+  overflow-y: hidden;
   padding: 4px 2px 10px;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 26px;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
-  touch-action: pan-y pinch-zoom;
+  -webkit-overflow-scrolling: touch;
 }
 
 .gallery-track::-webkit-scrollbar {
