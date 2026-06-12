@@ -13,7 +13,12 @@ import {
   subscribeToBookings,
   updateBooking,
 } from "../lib/firebase";
-import { downloadCsv, getTodayIsoDate } from "../lib/formatters";
+import {
+  downloadCsv,
+  formatSom,
+  formatThousandSom,
+  getTodayIsoDate,
+} from "../lib/formatters";
 import "../styles/admin.css";
 
 const STATUS_LABELS = {
@@ -53,6 +58,30 @@ function getMonthlyCounts(bookings) {
   return counts;
 }
 
+function getPositiveNumber(value) {
+  const number = Number(value);
+  return Number.isFinite(number) && number > 0 ? number : 0;
+}
+
+function getNonNegativeNumber(value) {
+  const number = Number(value);
+  return Number.isFinite(number) && number > 0 ? number : 0;
+}
+
+function getBookingRevenue(booking) {
+  return getPositiveNumber(booking.guests) * getPositiveNumber(booking.pricePerGuest) * 1000;
+}
+
+function getFirebaseErrorMessage(error, fallback) {
+  const message = error instanceof Error ? error.message : String(error || "");
+
+  if (message.toLowerCase().includes("permission")) {
+    return "Firebase ruxsat bermadi. Realtime Database Rules ichida bookings uchun read/write ruxsatini tekshiring.";
+  }
+
+  return message || fallback;
+}
+
 export default function AdminPage() {
   const navigate = useNavigate();
   const [isDark, setIsDark] = useState(false);
@@ -68,6 +97,9 @@ export default function AdminPage() {
     phone: "",
     date: "",
     guests: "",
+    pricePerGuest: "",
+    schoolChildren: "",
+    kindergartenChildren: "",
     comment: "",
     status: "new",
   });
@@ -102,7 +134,17 @@ export default function AdminPage() {
     }
 
     setErrorMessage("");
-    return subscribeToBookings(setBookings);
+    return subscribeToBookings(
+      (nextBookings) => {
+        setBookings(nextBookings);
+        setErrorMessage("");
+      },
+      (error) => {
+        setErrorMessage(
+          getFirebaseErrorMessage(error, "Bronlarni Firebase'dan o'qib bo'lmadi."),
+        );
+      },
+    );
   }, []);
 
   const filteredBookings = useMemo(() => {
@@ -135,8 +177,28 @@ export default function AdminPage() {
         (sum, booking) => sum + (Number.parseInt(booking.guests, 10) || 0),
         0,
       ),
+      revenue: bookings.reduce((sum, booking) => {
+        if (booking.status === "cancelled") {
+          return sum;
+        }
+
+        return sum + getBookingRevenue(booking);
+      }, 0),
+      schoolChildren: bookings.reduce(
+        (sum, booking) => sum + getNonNegativeNumber(booking.schoolChildren),
+        0,
+      ),
+      kindergartenChildren: bookings.reduce(
+        (sum, booking) => sum + getNonNegativeNumber(booking.kindergartenChildren),
+        0,
+      ),
     }),
     [bookings],
+  );
+
+  const modalRevenue = useMemo(
+    () => getPositiveNumber(modalForm.guests) * getPositiveNumber(modalForm.pricePerGuest) * 1000,
+    [modalForm.guests, modalForm.pricePerGuest],
   );
 
   useEffect(() => {
@@ -204,6 +266,9 @@ export default function AdminPage() {
       phone: "",
       date: "",
       guests: "",
+      pricePerGuest: "",
+      schoolChildren: "",
+      kindergartenChildren: "",
       comment: "",
       status: "new",
     });
@@ -228,6 +293,9 @@ export default function AdminPage() {
       phone: booking.phone || "",
       date: booking.date || "",
       guests: String(booking.guests || ""),
+      pricePerGuest: String(booking.pricePerGuest || ""),
+      schoolChildren: String(booking.schoolChildren || ""),
+      kindergartenChildren: String(booking.kindergartenChildren || ""),
       comment: booking.comment || "",
       status: booking.status || "new",
     });
@@ -248,11 +316,30 @@ export default function AdminPage() {
       return;
     }
 
+    const guests = getPositiveNumber(modalForm.guests);
+    const pricePerGuest = getNonNegativeNumber(modalForm.pricePerGuest);
+    const schoolChildren = getNonNegativeNumber(modalForm.schoolChildren);
+    const kindergartenChildren = getNonNegativeNumber(modalForm.kindergartenChildren);
+
+    if (guests <= 0) {
+      window.alert("Mehmonlar soni kamida 1 bo'lishi kerak.");
+      return;
+    }
+
+    if (schoolChildren + kindergartenChildren > guests) {
+      window.alert("Bolalar soni jami mehmonlar sonidan ko'p bo'lmasligi kerak.");
+      return;
+    }
+
     const payload = {
       name: modalForm.name.trim(),
       phone: modalForm.phone.trim(),
       date: modalForm.date,
-      guests: Number(modalForm.guests),
+      guests,
+      pricePerGuest,
+      totalAmount: guests * pricePerGuest * 1000,
+      schoolChildren,
+      kindergartenChildren,
       comment: modalForm.comment.trim(),
       status: modalForm.status,
     };
@@ -272,7 +359,7 @@ export default function AdminPage() {
 
       closeModal();
     } catch (error) {
-      window.alert(error instanceof Error ? error.message : "Bronni saqlab bo'lmadi.");
+      window.alert(getFirebaseErrorMessage(error, "Bronni saqlab bo'lmadi."));
     }
   };
 
@@ -280,7 +367,7 @@ export default function AdminPage() {
     try {
       await updateBooking(firebaseKey, { status });
     } catch (error) {
-      window.alert(error instanceof Error ? error.message : "Statusni yangilab bo'lmadi.");
+      window.alert(getFirebaseErrorMessage(error, "Statusni yangilab bo'lmadi."));
     }
   };
 
@@ -300,7 +387,7 @@ export default function AdminPage() {
         }).catch(() => undefined);
       }
     } catch (error) {
-      window.alert(error instanceof Error ? error.message : "Bronni o'chirib bo'lmadi.");
+      window.alert(getFirebaseErrorMessage(error, "Bronni o'chirib bo'lmadi."));
     }
   };
 
@@ -316,19 +403,36 @@ export default function AdminPage() {
     try {
       await clearBookings();
     } catch (error) {
-      window.alert(error instanceof Error ? error.message : "Bronlarni o'chirib bo'lmadi.");
+      window.alert(getFirebaseErrorMessage(error, "Bronlarni o'chirib bo'lmadi."));
     }
   };
 
   const handleExportCsv = () => {
     downloadCsv(`elite_dacha_bronlar_${getTodayIsoDate()}.csv`, [
-      ["#", "Ism", "Telefon", "Sana", "Mehmonlar", "Izoh", "Status", "Qabul qilingan"],
+      [
+        "#",
+        "Ism",
+        "Telefon",
+        "Sana",
+        "Mehmonlar",
+        "Odam boshiga narx (ming so'm)",
+        "Jami daromad (so'm)",
+        "Maktab bolalari",
+        "Bog'cha bolalari",
+        "Izoh",
+        "Status",
+        "Qabul qilingan",
+      ],
       ...bookings.map((booking, index) => [
         index + 1,
         booking.name,
         booking.phone,
         booking.date,
         booking.guests,
+        booking.pricePerGuest || 0,
+        getBookingRevenue(booking),
+        booking.schoolChildren || 0,
+        booking.kindergartenChildren || 0,
         booking.comment || "",
         booking.status,
         booking.received,
@@ -402,6 +506,18 @@ export default function AdminPage() {
             </div>
             <div className="ap-stat-l">Jami mehmonlar</div>
           </div>
+          <div className="ap-stat">
+            <div className="ap-stat-n money" id="s-revenue">
+              {formatSom(stats.revenue)}
+            </div>
+            <div className="ap-stat-l">Jami daromad</div>
+          </div>
+          <div className="ap-stat">
+            <div className="ap-stat-n" id="s-children">
+              {stats.schoolChildren} / {stats.kindergartenChildren}
+            </div>
+            <div className="ap-stat-l">Maktab / bog'cha bolalari</div>
+          </div>
         </div>
 
         <div className="ap-chart-wrap">
@@ -455,6 +571,9 @@ export default function AdminPage() {
                 <th>Telefon</th>
                 <th>Sana</th>
                 <th>Mehmonlar</th>
+                <th>Narx / kishi</th>
+                <th>Daromad</th>
+                <th>Bolalar</th>
                 <th>Izoh</th>
                 <th>Status</th>
                 <th>Qabul qilingan</th>
@@ -476,6 +595,12 @@ export default function AdminPage() {
                   </td>
                   <td>{booking.date || ""}</td>
                   <td style={{ textAlign: "center" }}>{booking.guests || 0}</td>
+                  <td>{formatThousandSom(booking.pricePerGuest)}</td>
+                  <td>{formatSom(getBookingRevenue(booking))}</td>
+                  <td>
+                    Maktab: {booking.schoolChildren || 0}, Bog'cha:{" "}
+                    {booking.kindergartenChildren || 0}
+                  </td>
                   <td style={{ color: "var(--text-muted)", fontSize: "12px" }}>
                     {booking.comment || "-"}
                   </td>
@@ -578,6 +703,47 @@ export default function AdminPage() {
               type="number"
               value={modalForm.guests}
             />
+          </div>
+          <div className="ap-field">
+            <label>Odam boshiga narx (ming so'm)</label>
+            <input
+              id="m-price-per-guest"
+              min="0"
+              name="pricePerGuest"
+              onChange={handleModalChange}
+              placeholder="Masalan: 150"
+              type="number"
+              value={modalForm.pricePerGuest}
+            />
+          </div>
+          <div className="ap-field-row">
+            <div className="ap-field">
+              <label>Maktab bolalari</label>
+              <input
+                id="m-school-children"
+                min="0"
+                name="schoolChildren"
+                onChange={handleModalChange}
+                placeholder="0"
+                type="number"
+                value={modalForm.schoolChildren}
+              />
+            </div>
+            <div className="ap-field">
+              <label>Bog'cha bolalari</label>
+              <input
+                id="m-kindergarten-children"
+                min="0"
+                name="kindergartenChildren"
+                onChange={handleModalChange}
+                placeholder="0"
+                type="number"
+                value={modalForm.kindergartenChildren}
+              />
+            </div>
+          </div>
+          <div className="ap-calculated-total">
+            Hisoblangan daromad: <strong>{formatSom(modalRevenue)}</strong>
           </div>
           <div className="ap-field">
             <label>Izoh</label>

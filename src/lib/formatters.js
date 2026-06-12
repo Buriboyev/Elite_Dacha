@@ -36,6 +36,19 @@ export function getTodayIsoDate() {
   return new Date().toISOString().slice(0, 10);
 }
 
+export function formatNumber(value) {
+  return new Intl.NumberFormat("uz-UZ").format(Number(value) || 0);
+}
+
+export function formatSom(value) {
+  return `${formatNumber(value)} so'm`;
+}
+
+export function formatThousandSom(value) {
+  const number = Number(value) || 0;
+  return number > 0 ? `${formatNumber(number)} ming` : "-";
+}
+
 export function downloadCsv(filename, rows) {
   const csv = rows
     .map((row) =>

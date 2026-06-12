@@ -12,6 +12,7 @@ import {
 const defaultFirebaseConfig = {
   apiKey: "AIzaSyA-2jSqhTTDlscIfy4KCyvjtSXVdldCr04",
   authDomain: "elite-dacha.firebaseapp.com",
+  databaseURL: "https://elite-dacha-default-rtdb.firebaseio.com",
   projectId: "elite-dacha",
   storageBucket: "elite-dacha.firebasestorage.app",
   messagingSenderId: "554561862964",
@@ -22,6 +23,8 @@ const defaultFirebaseConfig = {
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || defaultFirebaseConfig.apiKey,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || defaultFirebaseConfig.authDomain,
+  databaseURL:
+    import.meta.env.VITE_FIREBASE_DATABASE_URL || defaultFirebaseConfig.databaseURL,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || defaultFirebaseConfig.projectId,
   storageBucket:
     import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || defaultFirebaseConfig.storageBucket,
@@ -47,7 +50,10 @@ export const firebaseServices = {
   db: database,
 };
 
-export function subscribeToBookings(onChange) {
+export const db = database;
+export { push, ref, serverTimestamp };
+
+export function subscribeToBookings(onChange, onError) {
   if (!database) {
     onChange([]);
     return () => {};
@@ -55,15 +61,24 @@ export function subscribeToBookings(onChange) {
 
   const bookingsRef = ref(database, "bookings");
 
-  return onValue(bookingsRef, (snapshot) => {
-    const rawBookings = snapshot.val() || {};
-    const mapped = Object.entries(rawBookings).map(([firebaseKey, value]) => ({
-      firebaseKey,
-      ...value,
-    }));
+  return onValue(
+    bookingsRef,
+    (snapshot) => {
+      const rawBookings = snapshot.val() || {};
+      const mapped = Object.entries(rawBookings).map(([firebaseKey, value]) => ({
+        firebaseKey,
+        ...value,
+      }));
 
-    onChange(mapped);
-  });
+      onChange(mapped);
+    },
+    (error) => {
+      onChange([]);
+      if (onError) {
+        onError(error);
+      }
+    },
+  );
 }
 
 export async function createBooking(payload) {
