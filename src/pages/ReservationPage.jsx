@@ -17,11 +17,11 @@ function formatPhone(value) {
   let numbers = value.replace(/\D/g, '')
   if (!numbers.startsWith('998')) numbers = '998' + numbers
   numbers = numbers.substring(0, 12)
-  let formatted = '+998 '
+  let formatted = '+998'
   if (numbers.length > 3) formatted += numbers.substring(3, 5)
-  if (numbers.length >= 6) formatted += ' ' + numbers.substring(5, 8)
-  if (numbers.length >= 9) formatted += ' ' + numbers.substring(8, 10)
-  if (numbers.length >= 11) formatted += ' ' + numbers.substring(10, 12)
+  if (numbers.length >= 6) formatted += '' + numbers.substring(5, 8)
+  if (numbers.length >= 9) formatted += '' + numbers.substring(8, 10)
+  if (numbers.length >= 11) formatted += '' + numbers.substring(10, 12)
   return formatted
 }
 
